@@ -3,7 +3,7 @@
 #include "gta_pointers_layout_info.hpp"
 #include "sc_pointers_layout_info.hpp"
 
-#define GTA_VERSION_TARGET "1.71-3586.0"
+#define GTA_VERSION_TARGET "1.72-3717.0"
 
 namespace big
 {
@@ -639,7 +639,7 @@ namespace big
         // Handle Join Request (partially obfuscated now, crutches deployed)
         {
             "HJR",
-            "4C 8B F1 45 33 ED 48 8D 4D",
+            "4C 8B F1 48 8D 4D E0 45 33 FF",
             [](memory::handle ptr)
             {
                 g_pointers->m_gta.m_handle_join_request = ptr.sub(0x2D).as<PVOID>();
@@ -648,7 +648,7 @@ namespace big
         // Write Join Response Data
         {
             "WJRD",
-            "E8 ? ? ? ? 41 8B DF 84 C0 74 06",
+            "E8 ? ? ? ? 84 C0 75 0A",
             [](memory::handle ptr)
             {
                 g_pointers->m_gta.m_write_join_response_data = ptr.add(1).rip().as<functions::write_join_response_data>();
@@ -1762,10 +1762,10 @@ namespace big
         // Session Request Patch
         {
             "SRP",
-            "45 38 8E 48 B7 00 00 0F 85 43 FE FF FF",
+            "41 38 9E 98 B7 00 00 0F 85 ? ? ? ?",
             [](memory::handle ptr)
             {
-                g_pointers->m_gta.m_session_request_patch = ptr.add(0x14).as<PVOID>();
+                g_pointers->m_gta.m_session_request_patch = ptr.add(0xD).as<PVOID>();
             }
         },
         // Get Peer By Security Id
