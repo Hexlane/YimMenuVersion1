@@ -2,6 +2,9 @@
 A mod menu for Grand Theft Auto V Legacy
 
 ## How to use
+- before you start work on the Menu Rename the Folder to YimMenu
+
+## How to use
 1. Download the latest version of FSL from [here](https://www.unknowncheats.me/forum/grand-theft-auto-v/616977-fsl-local-gtao-saves.html) and place WINMM.dll in your GTA V directory
 2. Download YimMenu from [GitHub Releases](https://github.com/CSY0N/YimMenuVersion1/releases/tag/YimMenuV1)
 3. Download an injector, such as [Xenos](https://www.unknowncheats.me/forum/general-programming-and-reversing/124013-xenos-injector-v2-3-2-a.html)
