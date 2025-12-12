@@ -636,19 +636,19 @@ namespace big
                 g_pointers->m_gta.m_script_vm = ptr.add(1).rip().as<functions::script_vm>();
             }
         },
-        // Handle Join Request (partially obfuscated now, crutches deployed)Add commentMore actions
+        // Handle Join Request (partially obfuscated now, crutches deployed)
         {
             "HJR",
-            "4C 8B F1 48 8D 4D E0 45 33 FF",
+            "48 81 EC E8 03 00 00 4C 8B F1",
             [](memory::handle ptr)
             {
-                g_pointers->m_gta.m_handle_join_request = ptr.sub(0x2D).as<PVOID>();
+                g_pointers->m_gta.m_handle_join_request = ptr.sub(0x26).as<PVOID>();
             }
         },
         // Write Join Response Data
         {
             "WJRD",
-            "E8 ? ? ? ? 84 C0 75 0A",
+            "E8 ? ? ? ? 84 C0 75 0A 44 89 23",
             [](memory::handle ptr)
             {
                 g_pointers->m_gta.m_write_join_response_data = ptr.add(1).rip().as<functions::write_join_response_data>();
@@ -1160,14 +1160,22 @@ namespace big
                 g_pointers->m_gta.m_handle_chat_message = ptr.as<functions::handle_chat_message>();
             }
         },
-        // Language & Update Language
+        // Language
         {
-            "L&UL",
+            "L",
             "83 3D ? ? ? ? ? 44 8B C3",
             [](memory::handle ptr)
             {
                 g_pointers->m_gta.m_language = ptr.add(2).rip().add(1).as<eGameLanguage*>();
-                g_pointers->m_gta.m_update_language = ptr.add(0x38).rip().as<functions::update_language>();
+            }
+        },
+        // Update Language
+        {
+            "UL",
+            "84 C0 B1 01",
+            [](memory::handle ptr)
+            {
+                g_pointers->m_gta.m_update_language = ptr.add(0x11).rip().as<functions::update_language>();
             }
         },
         // Get Host Array Handler By Index
@@ -1754,7 +1762,7 @@ namespace big
         // Session Request Patch
         {
             "SRP",
-            "41 38 9E 98 B7 00 00 0F 85 ? ? ? ?",
+            "41 38 9E 98 B7 00 00 0F 85 6A FE FF FF",
             [](memory::handle ptr)
             {
                 g_pointers->m_gta.m_session_request_patch = ptr.add(0x14).as<PVOID>();
@@ -1900,7 +1908,7 @@ namespace big
         // Network Can Access Multiplayer
         {
             "NCAM",
-            "74 E0 33 D2 8B CB",
+             "74 E0 33 D2 8B CB",
             [](memory::handle ptr)
             {
                 g_pointers->m_gta.m_network_can_access_multiplayer = ptr.add(7).rip().as<PVOID>();
@@ -1913,6 +1921,45 @@ namespace big
             [](memory::handle ptr)
             {
                 g_pointers->m_gta.m_be_network_bail_patch = ptr.add(17).rip().add(1).rip().as<PVOID>();
+            }
+        },
+        // Add Skeleton Extension
+        {
+            "ASE",
+            "E8 ? ? ? ? 48 89 44 24 ? 48 85 C0 0F 84 ? ? ? ? 0F 28 05",
+            [](memory::handle ptr)
+            {
+                ptr = ptr.add(1).rip();
+                g_pointers->m_gta.m_add_skeleton_extension = ptr.as<PVOID>();
+                g_pointers->m_gta.m_skeleton_extension_count = ptr.add(0x2C).rip().as<int*>();
+            }
+        },
+        // Anticheat Initialized Hash
+        {
+            "AIH",
+            "48 83 EC 20 48 8B D9 48 8B 0D ? ? ? ? 48 85 C9 0F 84",
+            [](memory::handle ptr)
+            {
+               g_pointers->m_gta.m_anticheat_initialized_hash = ptr.add(10).rip().as<rage::Obf32**>();
+               g_pointers->m_gta.m_get_anticheat_initialized_hash = ptr.add(24).rip().add(1).rip().as<PVOID>();
+            }
+        },
+        // Anticheat Initialized Hash 2
+        {
+            "AIH2",
+            "89 8B E8 00 00 00 48 8B 0D",
+            [](memory::handle ptr)
+            {
+               g_pointers->m_gta.m_get_anticheat_initialized_hash_2 = ptr.add(14).rip().as<PVOID>();
+            }
+        },
+        // Anticheat Context
+        {
+            "AC",
+            "69 C9 FD 43 03 00 8B D0",
+            [](memory::handle ptr)
+            {
+               g_pointers->m_gta.m_anticheat_context = ptr.sub(4).rip().as<CAnticheatContext**>();
             }
         }
         >(); // don't leave a trailing comma at the end
