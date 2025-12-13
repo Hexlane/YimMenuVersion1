@@ -501,6 +501,13 @@ enum Sports : Hash
 	VEHICLE_TAMPA2       = "TAMPA2"_J,
 	VEHICLE_TROPOS       = "TROPOS"_J,
 	VEHICLE_VERLIERER2   = "VERLIERER2"_J,
+
+   //test
+   VEHICLE_astrale         = "astrale"_J,
+   VEHICLE_gt750           = "gt750"_J,
+   VEHICLE_keitora         = "keitora"_J,
+   VEHICLE_luiva           = "luiva"_J,
+
 };
 
 enum SportsClassic : Hash
