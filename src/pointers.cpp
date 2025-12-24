@@ -1962,6 +1962,15 @@ namespace big
                g_pointers->m_gta.m_anticheat_context = ptr.sub(4).rip().as<CAnticheatContext**>();
             }
         },
+        //Get Social Club News
+        {
+            "RSN",
+            "48 89 5C 24 18 48 89 74 24 20 55 57 41 56 48 8B EC 48 81 EC 80 00 00 00 48 8D",
+            [](memory::handle ptr)
+            {
+               g_pointers->m_gta.m_request_story_news_ptr = ptr.as<functions::news_story_request_received_data>();
+            }
+        },
         // Game Skeleton Update
         {
             "GSU",

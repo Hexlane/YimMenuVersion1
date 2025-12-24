@@ -1,7 +1,6 @@
 #pragma once
 #include "function_types.hpp"
 #include "gta/enums.hpp"
-
 #include <memory/handle.hpp>
 #include <security/ObfVar.hpp>
 
@@ -50,6 +49,7 @@ namespace big
 #pragma pack(push, 1)
 	struct gta_pointers
 	{
+		functions::news_story_request_received_data m_request_story_news_ptr;
 		PVOID m_world_model_spawn_bypass;
 
 		memory::handle m_blame_explode;

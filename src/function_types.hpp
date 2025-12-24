@@ -1,6 +1,7 @@
 #pragma once
 #include <rage/rlTaskStatus.hpp>
 #include <script/scrNativeHandler.hpp>
+#include <socialclub/sc_news.hpp>
 
 class CMsgJoinResponse;
 class NetworkGameFilterMatchmakingComponent;
@@ -230,4 +231,5 @@ namespace big::functions
 	using can_do_damage_to_ped = bool (*)(CPed* from, CWeaponInfo* current_weapon, CPed* target);
 
 	using get_last_keyboard_state = KeyboardState (*)();
+	using news_story_request_received_data = bool (*)(CNetworkSCNewsStoryRequest* pStory);
 }

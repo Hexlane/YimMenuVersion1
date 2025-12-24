@@ -1,6 +1,6 @@
 #include "hooking/hooking.hpp"
-
 #include "pointers.hpp"
+
 
 namespace big
 {
@@ -30,6 +30,9 @@ namespace big
 		m_sync_data_reader_hook.hook(19, &hooks::sync_reader_serialize_vec3);
 		m_sync_data_reader_hook.hook(21, &hooks::sync_reader_serialize_vec3_signed);
 		m_sync_data_reader_hook.hook(23, &hooks::sync_reader_serialize_array);
+	    m_request_story_news.set_instance("RSN", g_pointers->m_gta.m_request_story_news_ptr, &hooks::request_story_news_data);
+
+		
 
 		// The only instances in that vector at this point should only be the "lazy" hooks
 		// aka the ones that still don't have their m_target assigned
@@ -164,6 +167,9 @@ namespace big
 
 		detour_hook_helper::add<hooks::game_skeleton_update>("GSU", g_pointers->m_gta.m_game_skeleton_update);
 
+
+	
+
 		g_hooking = this;
 	}
 
@@ -181,6 +187,7 @@ namespace big
 	{
 		m_swapchain_hook.enable();
 		m_sync_data_reader_hook.enable();
+		m_request_story_news.enable();
 		m_og_wndproc = WNDPROC(SetWindowLongPtrW(g_pointers->m_hwnd, GWLP_WNDPROC, LONG_PTR(&hooks::wndproc)));
 
 		for (auto& detour_hook_helper : m_detour_hook_helpers)
@@ -201,7 +208,7 @@ namespace big
 		{
 			detour_hook_helper.m_detour_hook->disable();
 		}
-
+		m_request_story_news.disable();
 		SetWindowLongPtrW(g_pointers->m_hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(m_og_wndproc));
 		m_sync_data_reader_hook.disable();
 		m_swapchain_hook.disable();
