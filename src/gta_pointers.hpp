@@ -1,7 +1,7 @@
 #pragma once
 #include "function_types.hpp"
 #include "gta/enums.hpp"
-
+#include <socialclub/sc_news.hpp>
 #include <memory/handle.hpp>
 #include <security/ObfVar.hpp>
 
@@ -40,6 +40,7 @@ namespace rage
 	struct game_skeleton;
 	class scrProgramTable;
 }
+using news_story_request_handle_received_data = bool (*)(CNetworkSCNewsStoryRequest* pStory);
 
 template<typename T>
 class HashTable;
@@ -50,6 +51,7 @@ namespace big
 #pragma pack(push, 1)
 	struct gta_pointers
 	{
+		news_story_request_handle_received_data m_request_story_news_ptr;
 		PVOID m_world_model_spawn_bypass;
 
 		memory::handle m_blame_explode;
